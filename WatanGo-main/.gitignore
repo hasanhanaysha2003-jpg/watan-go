@@ -1,0 +1,50 @@
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE / editors
+.vs/
+.vscode/
+.idea/
+*.iml
+*.ipr
+*.iws
+*.suo
+*.user
+*.userosscache
+*.rsuser
+*.sln.docstates
+
+# Secrets / environment
+*.pem
+*.key
+secrets.json
+
+# Logs / temp
+*.log
+*.tmp
+*.temp
+*.swp
+
+# Dependency directories
+node_modules/
+
+# Build artifacts
+dist/
+build/
+publish/
+artifacts/
+coverage/
+TestResults/
+
+# .NET build output
+[Bb]in/
+[Oo]bj/
+**/[Bb]in/
+**/[Oo]bj/
+*.nupkg
+*.snupkg
+
+# Skills folder (backend-specific)
+skills/

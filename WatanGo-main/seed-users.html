@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WatanGo — Seed Users</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #f4f6fb;
+      --surface:   #ffffff;
+      --border:    #e2e8f0;
+      --text:      #1e293b;
+      --muted:     #64748b;
+      --radius:    14px;
+      --shadow:    0 4px 24px rgba(0,0,0,.07);
+
+      --admin-bg:  #fef2f2; --admin-border: #fca5a5; --admin-text: #b91c1c;   --admin-dot: #ef4444;
+      --driver-bg: #eff6ff; --driver-border:#93c5fd; --driver-text: #1d4ed8;  --driver-dot: #3b82f6;
+      --rest-bg:   #fff7ed; --rest-border:  #fdba74; --rest-text:   #c2410c;  --rest-dot:   #f97316;
+      --shop-bg:   #f0fdf4; --shop-border:  #86efac; --shop-text:   #166534;  --shop-dot:   #22c55e;
+      --user-bg:   #faf5ff; --user-border:  #c4b5fd; --user-text:   #6d28d9;  --user-dot:   #8b5cf6;
+    }
+
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 32px 20px 60px;
+    }
+
+    /* ── Header ─────────────────────────────────────────────────────────────── */
+    header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    .logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 8px;
+    }
+    .logo-icon {
+      width: 48px; height: 48px;
+      background: linear-gradient(135deg, #3b82f6, #6366f1);
+      border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 24px;
+    }
+    .logo-name { font-size: 28px; font-weight: 800; letter-spacing: -0.5px; }
+    .logo-name span { color: #3b82f6; }
+    header p { color: var(--muted); font-size: 15px; }
+
+    /* ── Legend ─────────────────────────────────────────────────────────────── */
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 40px;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 6px 16px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+    .legend-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+
+    /* ── Grid ───────────────────────────────────────────────────────────────── */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+      gap: 24px;
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+
+    /* ── Person card ─────────────────────────────────────────────────────────── */
+    .person-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .person-header {
+      padding: 20px 22px 16px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      border-bottom: 1px solid var(--border);
+      background: linear-gradient(135deg, #f8faff, #f0f4ff);
+    }
+    .avatar {
+      width: 48px; height: 48px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #3b82f6, #6366f1);
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800;
+      font-size: 18px;
+      color: #fff;
+      flex-shrink: 0;
+    }
+    .person-name { font-size: 16px; font-weight: 700; }
+    .person-prefix { font-size: 12px; color: var(--muted); margin-top: 2px; font-family: monospace; }
+    .supervisor-badge {
+      margin-right: auto;
+      background: #fef3c7;
+      color: #92400e;
+      border: 1px solid #fcd34d;
+      border-radius: 999px;
+      padding: 2px 10px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+    }
+
+    /* ── Account rows ────────────────────────────────────────────────────────── */
+    .account-list { padding: 12px 14px; display: flex; flex-direction: column; gap: 8px; }
+
+    .account-row {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 12px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      transition: box-shadow .15s;
+    }
+    .account-row:hover { box-shadow: 0 2px 12px rgba(0,0,0,.08); }
+
+    .role-badge {
+      border-radius: 999px;
+      padding: 3px 10px;
+      font-size: 11px;
+      font-weight: 700;
+      white-space: nowrap;
+      border: 1px solid;
+      align-self: center;
+    }
+    .role-badge.admin        { background: var(--admin-bg);  border-color: var(--admin-border);  color: var(--admin-text);  }
+    .role-badge.driver       { background: var(--driver-bg); border-color: var(--driver-border); color: var(--driver-text); }
+    .role-badge.restaurant   { background: var(--rest-bg);   border-color: var(--rest-border);   color: var(--rest-text);   }
+    .role-badge.market       { background: var(--shop-bg);   border-color: var(--shop-border);   color: var(--shop-text);   }
+    .role-badge.user         { background: var(--user-bg);   border-color: var(--user-border);   color: var(--user-text);   }
+
+    /* creds column: two stacked field rows */
+    .account-creds { display: flex; flex-direction: column; gap: 5px; min-width: 0; }
+
+    .field-row {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+    .field-icon { font-size: 12px; flex-shrink: 0; opacity: .65; }
+    .field-value {
+      font-family: monospace;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
+      flex: 1;
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .field-row.pass .field-value { font-size: 12px; color: var(--muted); font-weight: 500; }
+
+    .copy-btn {
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 2px 8px;
+      cursor: pointer;
+      font-size: 11px;
+      color: var(--muted);
+      transition: all .15s;
+      white-space: nowrap;
+      flex-shrink: 0;
+      line-height: 1.6;
+    }
+    .copy-btn:hover { background: #f1f5f9; color: var(--text); border-color: #94a3b8; }
+    .copy-btn.copied { background: #f0fdf4; color: #166534; border-color: #86efac; }
+
+    /* ── Footer ─────────────────────────────────────────────────────────────── */
+    footer {
+      text-align: center;
+      margin-top: 48px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    footer strong { color: var(--text); }
+  </style>
+</head>
+<body>
+
+  <!-- ── Header ──────────────────────────────────────────────────────────────── -->
+  <header>
+    <div class="logo">
+      <div class="logo-icon">🚀</div>
+      <div class="logo-name">Watan<span>Go</span></div>
+    </div>
+    <p>Seed Users Reference — Development &amp; Testing</p>
+  </header>
+
+  <!-- ── Role legend ─────────────────────────────────────────────────────────── -->
+  <div class="legend">
+    <div class="legend-item"><span class="legend-dot" style="background:var(--admin-dot)"></span>Admin</div>
+    <div class="legend-item"><span class="legend-dot" style="background:var(--driver-dot)"></span>Driver</div>
+    <div class="legend-item"><span class="legend-dot" style="background:var(--rest-dot)"></span>Restaurant Owner</div>
+    <div class="legend-item"><span class="legend-dot" style="background:var(--shop-dot)"></span>Market Owner</div>
+    <div class="legend-item"><span class="legend-dot" style="background:var(--user-dot)"></span>User (Customer)</div>
+  </div>
+
+  <!-- ── Cards grid ──────────────────────────────────────────────────────────── -->
+  <div class="grid" id="grid"></div>
+
+  <footer>
+    <p>All passwords follow the pattern <strong>Role@1234</strong> &nbsp;·&nbsp; Phone numbers are unique per role per person</p>
+  </footer>
+
+  <script>
+    const people = [
+      {
+        name: "Moustafa Fayyad",
+        initials: "MF",
+        prefix: "0595 1xxxxx",
+        supervisor: false,
+        accounts: [
+          { role: "Admin",           roleClass: "admin",      phone: "0595100001", pass: "Admin@1234"  },
+          { role: "Driver",          roleClass: "driver",     phone: "0595100002", pass: "Driver@1234" },
+          { role: "Restaurant Owner",roleClass: "restaurant", phone: "0595100003", pass: "Rest@1234"   },
+          { role: "Market Owner",    roleClass: "market",     phone: "0595100004", pass: "Shop@1234"   },
+          { role: "User",            roleClass: "user",       phone: "0595100005", pass: "User@1234"   },
+        ],
+      },
+      {
+        name: "Hasan Hanaysha",
+        initials: "HH",
+        prefix: "0595 2xxxxx",
+        supervisor: false,
+        accounts: [
+          { role: "Admin",           roleClass: "admin",      phone: "0595200001", pass: "Admin@1234"  },
+          { role: "Driver",          roleClass: "driver",     phone: "0595200002", pass: "Driver@1234" },
+          { role: "Restaurant Owner",roleClass: "restaurant", phone: "0595200003", pass: "Rest@1234"   },
+          { role: "Market Owner",    roleClass: "market",     phone: "0595200004", pass: "Shop@1234"   },
+          { role: "User",            roleClass: "user",       phone: "0595200005", pass: "User@1234"   },
+        ],
+      },
+      {
+        name: "Younis Hantoli",
+        initials: "YH",
+        prefix: "0595 3xxxxx",
+        supervisor: false,
+        accounts: [
+          { role: "Admin",           roleClass: "admin",      phone: "0595300001", pass: "Admin@1234"  },
+          { role: "Driver",          roleClass: "driver",     phone: "0595300002", pass: "Driver@1234" },
+          { role: "Restaurant Owner",roleClass: "restaurant", phone: "0595300003", pass: "Rest@1234"   },
+          { role: "Market Owner",    roleClass: "market",     phone: "0595300004", pass: "Shop@1234"   },
+          { role: "User",            roleClass: "user",       phone: "0595300005", pass: "User@1234"   },
+        ],
+      },
+      {
+        name: "Wadee Ghanim",
+        initials: "WG",
+        prefix: "0595 4xxxxx",
+        supervisor: false,
+        accounts: [
+          { role: "Admin",           roleClass: "admin",      phone: "0595400001", pass: "Admin@1234"  },
+          { role: "Driver",          roleClass: "driver",     phone: "0595400002", pass: "Driver@1234" },
+          { role: "Restaurant Owner",roleClass: "restaurant", phone: "0595400003", pass: "Rest@1234"   },
+          { role: "Market Owner",    roleClass: "market",     phone: "0595400004", pass: "Shop@1234"   },
+          { role: "User",            roleClass: "user",       phone: "0595400005", pass: "User@1234"   },
+        ],
+      },
+      {
+        name: "Rafat Amarneh",
+        initials: "RA",
+        prefix: "0595 5xxxxx",
+        supervisor: true,
+        accounts: [
+          { role: "Admin",           roleClass: "admin",      phone: "0595500001", pass: "Admin@1234"  },
+          { role: "Driver",          roleClass: "driver",     phone: "0595500002", pass: "Driver@1234" },
+          { role: "Restaurant Owner",roleClass: "restaurant", phone: "0595500003", pass: "Rest@1234"   },
+          { role: "Market Owner",    roleClass: "market",     phone: "0595500004", pass: "Shop@1234"   },
+          { role: "User",            roleClass: "user",       phone: "0595500005", pass: "User@1234"   },
+        ],
+      },
+    ];
+
+    function copyText(text, btn) {
+      navigator.clipboard.writeText(text).then(() => {
+        btn.textContent = "✓ Copied";
+        btn.classList.add("copied");
+        setTimeout(() => {
+          btn.textContent = "Copy";
+          btn.classList.remove("copied");
+        }, 1800);
+      });
+    }
+
+    const grid = document.getElementById("grid");
+
+    people.forEach(person => {
+      const card = document.createElement("div");
+      card.className = "person-card";
+
+      const supervisorBadge = person.supervisor
+        ? `<span class="supervisor-badge">Supervisor</span>`
+        : "";
+
+      card.innerHTML = `
+        <div class="person-header">
+          <div class="avatar">${person.initials}</div>
+          <div>
+            <div class="person-name">${person.name} ${supervisorBadge}</div>
+            <div class="person-prefix">${person.prefix}</div>
+          </div>
+        </div>
+        <div class="account-list">
+          ${person.accounts.map(acc => `
+            <div class="account-row">
+              <span class="role-badge ${acc.roleClass}">${acc.role}</span>
+              <div class="account-creds">
+                <div class="field-row phone">
+                  <span class="field-icon">📱</span>
+                  <span class="field-value">${acc.phone}</span>
+                  <button class="copy-btn" onclick="copyText('${acc.phone}', this)">Copy</button>
+                </div>
+                <div class="field-row pass">
+                  <span class="field-icon">🔑</span>
+                  <span class="field-value">${acc.pass}</span>
+                  <button class="copy-btn" onclick="copyText('${acc.pass}', this)">Copy</button>
+                </div>
+              </div>
+            </div>
+          `).join("")}
+        </div>
+      `;
+
+      grid.appendChild(card);
+    });
+  </script>
+</body>
+</html>
